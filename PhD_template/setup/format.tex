@@ -1,0 +1,252 @@
+%============================================================
+% 现代中文 PhD 论文模板 - 格式配置
+% 使用 ctex 宏包的现代字体配置
+%============================================================
+
+%---------- 页面尺寸设置 ----------
+% 使用 geometry 宏包设置页面
+\geometry{
+    paperwidth=210mm,
+    paperheight=297mm,
+    top=3.9cm,
+    bottom=3.5cm,
+    left=2.9cm,
+    right=2.9cm,
+    headheight=10mm,
+    headsep=12mm,
+    footskip=10mm
+}
+
+%---------- 文本区域 ----------
+% 手动微调（保持与原模板一致）
+\setlength{\textwidth}{160mm}
+\setlength{\textheight}{230mm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\voffset}{0mm}
+
+%---------- ctex 章节标题格式设置 ----------
+% 使用 ctex 的标题格式接口
+
+% 章节编号格式：第X章
+\ctexset{
+    chapter = {
+        name = {第,章},
+        number = \chinese{chapter},
+        beforeskip = 0pt,
+        afterskip = 22pt,
+        format = \centering\zihao{3}\heiti\bfseries,
+        nameformat = \zihao{3}\heiti\bfseries,
+        titleformat = \zihao{3}\heiti\bfseries,
+        numberformat = \zihao{3}\heiti\bfseries
+    }
+}
+
+% 一级标题格式
+\ctexset{
+    section = {
+        format = \zihao{4}\heiti\bfseries,
+        beforeskip = 5pt,
+        afterskip = 5pt
+    }
+}
+
+% 二级标题格式
+\ctexset{
+    subsection = {
+        format = \zihao{-4}\heiti\bfseries,
+        beforeskip = 1pt,
+        afterskip = 1pt
+    }
+}
+
+% 三级标题格式
+\ctexset{
+    subsubsection = {
+        format = \zihao{-4}\heiti\bfseries,
+        beforeskip = 0.25em,
+        afterskip = 0pt
+    }
+}
+
+% 四级标题格式
+\ctexset{
+    paragraph = {
+        format = \zihao{-4}\heiti\bfseries,
+        beforeskip = 0.25em,
+        afterskip = 0pt,
+        runin = true
+    }
+}
+
+%---------- 目录格式设置 ----------
+% 目录标题
+\ctexset{
+    contentsname = 目\quad 录
+}
+
+% 目录深度
+\setcounter{tocdepth}{3}
+
+%---------- 目录引导符设置 ----------
+% 使用 titletoc 设置引导符
+% 章节条目：标题 + 引导符 + 页码
+\titlecontents{chapter}[0em]
+    {\vspace{1.0em}\bfseries}           % 格式：章节标题加粗，顶部间距
+    {\thecontentslabel\hspace{0.5em}}     % 标签：第X章 + 空格
+    {}                                   % 无标签时的格式
+    {\titlerule*[0.5pc]{.}\contentspage} % 引导符（0.5pc间距的点线）+ 页码
+
+% 节条目
+\titlecontents{section}[1.5em]
+    {\bfseries}
+    {\thecontentslabel\hspace{1em}}
+    {}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+% 小节条目
+\titlecontents{subsection}[3em]
+    {\bfseries}
+    {\thecontentslabel\hspace{1em}}
+    {}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+%---------- 页眉页脚设置 ----------
+\pagestyle{fancy}
+
+% 清除默认页眉页脚
+\fancyhf{}
+
+% 定义页眉双线
+\newcommand{\makeheadrule}{%
+    \makebox[0pt][l]{\rule[.8\baselineskip]{\headwidth}{1.6pt}}%
+    \rule[.6\baselineskip]{\headwidth}{0.6pt}\vskip-.7\baselineskip}
+
+\makeatletter
+\renewcommand{\headrule}{%
+    {\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
+    \makeheadrule}}
+\makeatother
+
+% 页眉 Logo
+\newsavebox{\headpic}
+\sbox{\headpic}{\hspace{0.72cm}\includegraphics[height=15mm]{figures/hblogo}}
+\fancyhead[LO,LE]{~~\usebox{\headpic}}
+
+% 页脚页码
+\fancyfoot[CE,CO]{\thepage}
+
+%---------- 图表标题格式 ----------
+% 图表编号格式
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+
+% 图表标题字体
+\captionsetup{
+    font=small,
+    labelfont=normalfont,
+    labelsep=quad,
+    format=plain
+}
+
+% 图/表名称
+\ctexset{
+    figurename = 图,
+    tablename = 表
+}
+
+%---------- 公式编号格式 ----------
+% 按章节编号
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+\makeatletter
+\@addtoreset{equation}{chapter}
+\makeatother
+
+%---------- 段落设置 ----------
+% 首行缩进（2字符）
+\setlength{\parindent}{2em}
+
+% 段落间距
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+% 行距设置
+\renewcommand{\baselinestretch}{1.25}
+\setlength{\baselineskip}{19pt}
+
+%---------- 列表环境设置 ----------
+\setlist{
+    parsep=0pt,
+    itemsep=0ex plus 0.1ex,
+    topsep=0pt,
+    partopsep=0pt
+}
+
+%---------- 章节页面样式 ----------
+% 确保章节首页也使用 fancy 样式
+\makeatletter
+\let\old@chapter\chapter
+\def\chapter{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \thispagestyle{fancy}%
+    \old@chapter
+}
+\makeatother
+
+%---------- 参考文献名称 ----------
+\ctexset{
+    bibname = 参考文献
+}
+
+%---------- 附录设置 ----------
+% 附录编号格式
+\newcommand{\setappendixA}{%
+    \renewcommand{\theequation}{A.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+\newcommand{\setappendixB}{%
+    \renewcommand{\theequation}{B.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+\newcommand{\setappendixC}{%
+    \renewcommand{\theequation}{C.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+\newcommand{\setappendixD}{%
+    \renewcommand{\theequation}{D.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+\newcommand{\setappendixE}{%
+    \renewcommand{\theequation}{E.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+
+%---------- 参考文献列表加入目录 ----------
+\newcommand{\libname}[1]{%
+    \renewcommand\bibname{#1}%
+    \addcontentsline{toc}{chapter}{\bfseries #1}}
+
+%---------- 浮动体设置 ----------
+% 浮动体位置参数
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.7}
+
+%---------- 脚注设置 ----------
+% 每页重新编号
+\makeatletter
+\@addtoreset{footnote}{page}
+\makeatother
+
+%---------- 超链接设置 ----------
+% 在文档开始时启用 CJK 书签
+\AtBeginDocument{%
+    \hypersetup{CJKbookmarks=true}%
+}
+
+%---------- 自定义命令 ----------
+% 中文数字章节引用（如果需要）
+\newcommand{\chref}[1]{第\chinese{#1}章}

@@ -1,0 +1,287 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   华中师范大学硕士论文模板 - 格式设置
+%%   Format Configuration for CCNU Thesis
+%%   版本: 2.0 (2025年3月更新)
+%%
+%%   说明: 本文件包含论文的所有格式设置
+%%   包括页面布局、页眉页脚、章节格式等
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%===========================================================================
+%%  页面布局设置
+%%===========================================================================
+%% 用途: 设置论文的页边距和页面元素位置
+%% 参数说明:
+%%   - top: 上边距，包含页眉区域
+%%   - bottom: 下边距，包含页脚区域
+%%   - left: 左边距(内侧)
+%%   - right: 右边距(外侧)
+%%   - headsep: 页眉基线与正文顶部的距离
+%%   - headheight: 页眉高度
+%%   - footskip: 正文底部到页脚底部的距离
+%% 修改建议: 如需调整页边距，请保持左右对称，确保装订后有足够留白
+\geometry{
+    top=3.9cm,
+    bottom=3.5cm,
+    left=2.8cm,
+    right=3.0cm,
+    headsep=5mm,
+    headheight=20mm,
+    footskip=12mm
+}
+
+%%===========================================================================
+%%  页眉页脚设置
+%%===========================================================================
+%% 用途: 定义页眉中的双横线样式
+%% 参数说明:
+%%   - \headwidth: 页眉宽度
+%%   - 1.6pt: 上横线粗细
+%%   - 0.6pt: 下横线粗细
+%%   - 两条线间距由 \vskip 控制
+%% 修改建议: 如需改变线条样式，调整 rule 的粗细参数
+\newcommand{\makeheadrule}{%
+   \makebox[0pt][l]{\rule[.8\baselineskip]{\headwidth}{1.6pt}}%
+   \rule[.6\baselineskip]{\headwidth}{0.6pt}\vskip-.7\baselineskip}
+\makeatletter
+\renewcommand{\headrule}{%
+   {\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
+    \makeheadrule}}
+\makeatother
+
+%% 设置页眉页脚样式
+%% 用途: 应用 fancy 样式到页面
+\pagestyle{fancy}
+
+%% 页眉 Logo 设置
+%% 用途: 在页眉左侧显示学校 Logo
+%% 参数说明:
+%%   - \hspace{0.72cm}: Logo 左边距微调
+%%   - height=15mm: Logo 高度
+%%   - figures/hblogo: Logo 文件路径
+%% 修改建议: 如需更换 Logo，修改文件名和路径
+\newsavebox{\headpic}
+\sbox{\headpic}{\hspace{0.72cm}\includegraphics[height=15mm]{figures/hblogo}}
+\fancyhead{}  %% 清除默认页眉内容
+\fancyhead[LO,LE]{~~\usebox{\headpic}}  %% LO=左奇数页, LE=左偶数页
+
+%% 页脚页码设置
+%% 用途: 在页脚显示页码
+%% 注意: 默认不设置，在 main.tex 中根据部分设置
+%% 正文部分使用: \fancyfoot[C]{\thepage}
+\fancyfoot{}
+
+%% 章节首页页眉页脚设置
+%% 用途: 章节第一页使用特殊样式
+\fancypagestyle{plain}{%
+    \fancyhf{}  %% 清除所有页眉页脚
+    \fancyhead[LO,LE]{~~\usebox{\headpic}}  %% 章节首页也显示 Logo
+    \fancyfoot[C]{\bfseries \thepage}  %% 页码居中显示
+}
+
+%%===========================================================================
+%%  ctexset 章节格式设置
+%%===========================================================================
+%% 用途: 使用 ctex 宏包设置章节标题格式
+%% 符合华中师范大学硕士论文格式要求
+
+%% 章(Chapter)格式设置
+%% 参数说明:
+%%   - name={第,章}: 章节编号前后文字
+%%   - number=\chinese{chapter}: 使用中文数字(第一章、第二章...)
+%%   - format: 格式 - 居中、三号字(16pt)、黑体、加粗
+%%   - beforeskip: 标题前间距(-25pt 向上调整)
+%%   - afterskip: 标题后间距
+%%   - pagestyle: 使用 fancy 页眉页脚
+%% 修改建议: 如需调整章节标题字号，修改 \zihao{3}
+\ctexset{
+    chapter = {
+        name = {第,章},
+        number = \chinese{chapter},
+        format = \centering\zihao{3}\heiti\bfseries,
+        beforeskip = -12pt,
+        afterskip = 12pt,
+        pagestyle = fancy
+    },
+    section = {
+        format = \zihao{4}\heiti\bfseries,
+        beforeskip = 5pt,
+        afterskip = 5pt,
+        indent = 2em
+    },
+    subsection = {
+        format = \zihao{-4}\heiti\bfseries,
+        beforeskip = 1pt,
+        afterskip = 1pt,
+        indent = 2em
+    },
+    subsubsection = {
+        format = \zihao{-4}\heiti\bfseries,
+        beforeskip = 0.25em,
+        afterskip = 0pt,
+        indent = 2em
+    },
+    paragraph = {
+        format = \zihao{-4}\heiti\bfseries,
+        runin = true,
+        beforeskip = 0.25em,
+        afterskip = 1em,
+        indent = 2em
+    }
+}
+
+%% 目录标题设置
+%% 用途: 修改目录、图目录、表目录的标题文字
+\ctexset{
+    contentsname = {目~~录},
+    listfigurename = {图目录},
+    listtablename = {表目录}
+}
+
+%% 目录引导符设置
+%% 使用 titletoc 设置引导符
+%% 章节条目：标题 + 引导符 + 页码
+\titlecontents{chapter}[0em]
+    {\vspace{1.0em}\bfseries}           % 格式：章节标题加粗，顶部间距
+    {\thecontentslabel\hspace{0.5em}}     % 标签：第X章 + 空格
+    {}                                   % 无标签时的格式
+    {\titlerule*[0.5pc]{.}\contentspage} % 引导符（0.5pc间距的点线）+ 页码
+
+% 节条目
+\titlecontents{section}[1.5em]
+    {\bfseries}
+    {\thecontentslabel\hspace{1em}}
+    {}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+% 小节条目
+\titlecontents{subsection}[3em]
+    {\bfseries}
+    {\thecontentslabel\hspace{1em}}
+    {}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+%% 参考文献标题设置
+%% 用途: 修改参考文献章节的标题
+\ctexset{
+    bibname = {参考文献}
+}
+
+%% 缩进长度定义
+%% 用途: 定义常用的缩进长度
+%% 参数说明:
+%%   - \ccwd: ctex 定义的中文字符宽度
+%%   - \clength: 两个中文字符宽度(标准段落缩进)
+%%   - \twoclength: 四个中文字符宽度
+\newlength{\clength}
+\setlength{\clength}{2\ccwd}
+\newlength{\twoclength}
+\setlength{\twoclength}{2\clength}
+
+%%===========================================================================
+%%  目录格式设置
+%%===========================================================================
+%% 用途: 设置目录显示深度
+%% 参数说明:
+%%   - tocdepth=3: 显示到 \subsubsection 层级
+%%   - 0=章, 1=节, 2=小节, 3=小小节
+%% 修改建议: 如需显示更多层级，增加数值；如需更简洁，减少数值
+\setcounter{tocdepth}{3}
+
+%%===========================================================================
+%%  图表标题格式设置
+%%===========================================================================
+%% 用途: 设置图和表的标题样式
+%% 参数说明:
+%%   - font={small}: 标题使用小字号
+%%   - labelfont={normalfont}: 标签(图/表)使用正文字体
+%%   - labelsep=quad: 标签与标题间使用一个汉字空格
+%%   - format=plain: 普通格式，不缩进
+%% 修改建议: 如需改变标签与标题间距，调整 labelsep
+\captionsetup{
+    font={small},
+    labelfont={normalfont},
+    labelsep=quad,
+    format=plain
+}
+
+%% 图表编号格式
+%% 用途: 设置图和表的编号为 "章号.序号" 格式
+%% 示例: 图 1.1, 图 1.2, 表 2.1
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+
+%% 子图/子表标签格式
+%% 用途: 简化子图标签格式
+\captionsetup[subfigure]{labelformat=simple}
+\captionsetup[subtable]{labelformat=simple}
+
+%%===========================================================================
+%%  数学和物理符号定义
+%%===========================================================================
+%% 上标引用命令
+%% 用途: 在正文中以上标形式显示引用编号
+%% 示例: \supercite{key} 显示为 上标数字
+\newcommand{\supercite}[1]{\textsuperscript{\cite{#1}}}
+
+%% 量子力学符号
+%% 用途: 方便输入 Dirac 符号
+%% 示例: \ket{\psi} 显示为 |ψ⟩, \bra{\psi} 显示为 ⟨ψ|
+\newcommand{\ket}[1]{\left\vert{#1}\right\rangle}
+\newcommand{\bra}[1]{\left\langle{#1}\right\vert}
+
+%% 绝对值符号
+%% 用途: 自动调整大小的绝对值符号
+\newcommand{\abs}[1]{\left\vert{#1}\right\vert}
+
+%%===========================================================================
+%%  文档基本设置
+%%===========================================================================
+%% 段落设置
+%% 用途: 设置段落缩进和间距
+%% 参数说明:
+%%   - parindent=2em: 首行缩进两个字符
+%%   - parskip: 段落间距，可伸缩以适应页面
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+%% 行距设置
+%% 用途: 设置行间距为 1.25 倍
+%% 参数说明:
+%%   - baselinestretch=1.25: 1.25 倍行距
+%%   - baselineskip=19pt: 基准行距 19pt
+%% 修改建议: 如需 1.5 倍行距，改为 1.5
+\renewcommand{\baselinestretch}{1.25}
+\setlength{\baselineskip}{19pt}
+
+%% 章节编号深度
+%% 用途: 设置自动编号的章节层级
+%% 参数说明:
+%%   - secnumdepth=4: 编号到 \paragraph 层级
+%%   - 0=章, 1=节, 2=小节, 3=小小节, 4=段
+\setcounter{secnumdepth}{4}
+
+%%===========================================================================
+%%  附录设置
+%%===========================================================================
+%% 用途: 重新定义附录环境
+%% 功能:
+%%   - 重置章节计数器
+%%   - 使用字母编号 (A, B, C...)
+%%   - 公式编号格式改为 A.1, A.2...
+\newcommand{\setappendixA}{%
+    \renewcommand{\theequation}{A.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+\newcommand{\setappendixB}{%
+    \renewcommand{\theequation}{B.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+\newcommand{\setappendixC}{%
+    \renewcommand{\theequation}{C.\arabic{equation}}%
+    \setcounter{equation}{0}%
+}
+
+%%===========================================================================
+%%  文档结束
+%%===========================================================================

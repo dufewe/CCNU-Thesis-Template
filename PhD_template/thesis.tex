@@ -1,0 +1,84 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   现代中文 PhD 论文模板 - 主文件
+%%   使用 ctex 宏包 + XeLaTeX 编译
+%%   兼容 JHEP 参考文献格式
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper,twoside]{report}
+
+%---------- 载入宏包 ----------
+\input{setup/package.tex}
+
+%---------- 图片路径 ----------
+\graphicspath{{chapter/}{figures/}}
+
+%---------- 允许公式跨页 ----------
+\allowdisplaybreaks
+
+%---------- 载入格式设置 ----------
+\input{setup/format.tex}
+
+\begin{document}
+
+%============================================================
+% 封面部分
+%============================================================
+\fancyfoot{}
+\include{chapter/Cover_C}        % 中文封面
+\include{chapter/Cover_E}        % 英文封面
+
+\include{chapter/originauth}
+
+%============================================================
+% 前言部分（罗马数字页码）
+%============================================================
+
+%---------- 设置 plain 样式 ----------
+\fancypagestyle{plain}{%
+    \fancyhf{} % 清除所有页眉页脚
+    \fancyhead[LO,LE]{~~\usebox{\headpic}}
+    \fancyfoot[CO,CE]{\bfseries \thepage}
+}
+
+\pagenumbering{Roman}
+
+\include{chapter/Abstract_C}
+\include{chapter/Abstract_E}
+
+%---------- 目录 ----------
+\tableofcontents
+\cleardoublepage
+
+%============================================================
+% 正文部分（阿拉伯数字页码）
+%============================================================
+\fancyfoot[CO,CE]{\thepage}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{chapter/Introduction}
+\include{chapter/Chapter_Two}
+\include{chapter/Conclusion}
+
+%============================================================
+% 附录
+%============================================================
+\setappendixA
+\include{chapter/Appendix_A}
+
+\setappendixB
+\include{chapter/Appendix_B}
+
+%============================================================
+% 参考文献
+%============================================================
+\bibliographystyle{JHEP}
+\bibliography{Ref}
+
+%============================================================
+% 后续部分
+%============================================================
+\include{chapter/Publication}
+\include{chapter/Thanks}
+
+\end{document}
