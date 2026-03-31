@@ -1,1 +1,24 @@
-/.DS_Store
+# macOS
+.DS_Store
+
+# LaTeX 临时文件
+*.aux
+*.blg
+*.idx
+*.ind
+*.lof
+*.lot
+*.out
+*.acn
+*.acr
+*.alg
+*.fls
+*.log
+*.fdb_latexmk
+*.snm
+*.nav
+*.vrb
+*.synctex.gz
+*.xdv
+*.bbl
+*.toc
