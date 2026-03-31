@@ -67,7 +67,7 @@ latexmk -xelatex thesis
 ## 文件结构
 
 ```
-.
+PhD_template/
 ├── thesis.tex              # 主文件
 ├── setup/
 │   ├── package.tex         # 宏包配置（新版）

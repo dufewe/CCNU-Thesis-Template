@@ -16,7 +16,7 @@
 ## 文件结构
 
 ```
-Thesis_Template/
+main/
 ├── README.md                 # 本说明文档
 ├── Ms_template/              # 硕士论文模板
 │   ├── README.md            # 硕士模板说明
